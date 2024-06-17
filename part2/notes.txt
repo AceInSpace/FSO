@@ -1,0 +1,10 @@
+Change baseUrl in persons service
+Same Origin/CORS workaround
+No PUT request handler (might be next part)
+----
+
+Deploy to internet
+
+
+
+morgan.token('req-body', (req, res) => JSON.stringify(req.body))
