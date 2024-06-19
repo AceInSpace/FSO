@@ -131,11 +131,11 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const newPerson = { id: (persons.length + 1),name: newName, number: newNumber }
-    const person = persons.find(person => person.name === newName)
+    const newPerson = { name: newName, number: newNumber }
+    const person = persons.find((person) => person.name === newName)
 
     // If name exists, option to change number
-    if ( persons.find(person => person.name === newName) ) {
+    if (person) {
       if ( window.confirm(`${newName} is already added to phonebook. 
 Replace the old number with a new one?`) ) {
         personService
