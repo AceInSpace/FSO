@@ -131,6 +131,7 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    
     const newPerson = { name: newName, number: newNumber }
     const person = persons.find((person) => person.name === newName)
 
@@ -144,16 +145,15 @@ Replace the old number with a new one?`) ) {
             setPersons(
               persons.filter( p => p.id !== person.id )
                      .concat(resource.data) )
+            setError(false)
+            setMessage('Number successfully changed!')
+            setTimeout( () => setMessage(null), 5000 )
           })
           .catch(() => {
             setError(true)
-            setMessage(`${person.name} has already been removed from the server.`)
+            setMessage(error.response.data.error)
             setTimeout( () => setMessage(null), 5000 )
-            setPersons(persons.filter(p => p.id !== person.id))
           })
-          setError(false)
-          setMessage('Number successfully changed!')
-          setTimeout( () => setMessage(null), 5000 )
       }
     // Else add new person
     } else {
@@ -161,10 +161,15 @@ Replace the old number with a new one?`) ) {
         .create(newPerson)
         .then(resource => {
           setPersons( persons.concat(resource.data) )
+          setError(false)
+          setMessage('New person successfully added!')
+          setTimeout( () => setMessage(null), 5000 )
         })
-        setError(false)
-        setMessage('New person successfully added!')
-        setTimeout( () => setMessage(null), 5000 )
+        .catch(error => {
+          setError(true)
+          setMessage(error.response.data.error)
+          setTimeout( () => setMessage(null), 5000 )
+        })
     }
   }
 
